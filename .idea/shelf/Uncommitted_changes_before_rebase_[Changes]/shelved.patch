@@ -1,0 +1,64 @@
+Index: library/example.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\n\r\ndef run(old_x, old_y):\r\n    pygame.init()\r\n    screen = pygame.display.set_mode((400, 300))\r\n    pygame.display.set_caption(\"Mini Game\")\r\n    running = True\r\n\r\n    while running:\r\n        for event in pygame.event.get():\r\n            if event.type == pygame.QUIT:\r\n                screen = pygame.display.set_mode((old_x, old_y))\r\n                running = False\r\n\r\n        screen.fill((0, 128, 128))\r\n        pygame.display.flip()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/library/example.py b/library/example.py
+--- a/library/example.py	(revision 019c897e53e5b6b7fd0cb21182187305507d6dce)
++++ b/library/example.py	(date 1748236116689)
+@@ -1,5 +1,6 @@
+ import pygame
+ 
++# game starter
+ def run(old_x, old_y):
+     pygame.init()
+     screen = pygame.display.set_mode((400, 300))
+@@ -13,4 +14,8 @@
+                 running = False
+ 
+         screen.fill((0, 128, 128))
+-        pygame.display.flip()
+\ No newline at end of file
++        pygame.display.flip()
++
++# some game
++class SomeGame:
++    ...
+\ No newline at end of file
+Index: bin/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nimport asyncio\r\nimport importlib\r\nimport random\r\nimport os\r\n\r\nfrom bin.config import x_pixels, y_pixels, tick_rate\r\n\r\nclass GameWindow:\r\n    def __init__(self, x_pix: int, y_pix: int, ticks: int):\r\n        self.x = x_pix\r\n        self.y = y_pix\r\n        self.tick_rate = ticks\r\n\r\n        pygame.init()\r\n\r\n        self.screen = pygame.display.set_mode((self.x, self.y))\r\n        pygame.display.set_caption(\"Game Launcher\")\r\n        self.clock = pygame.time.Clock()\r\n        self.running = True\r\n\r\n        self.font = pygame.font.SysFont(None, 36)\r\n        self.buttons = self.load_games()\r\n\r\n    def load_games(self):\r\n        # loading all games from library\r\n        current_dir = os.path.dirname(__file__)\r\n        project_dir = os.path.abspath(os.path.join(current_dir, \"..\"))\r\n        library_dir = os.path.join(project_dir, \"library\")\r\n\r\n        files = [f for f in os.listdir(library_dir) if f.endswith(\".py\")]\r\n        buttons = []\r\n\r\n        cols = 3  # count columns in the grid\r\n        spacing = 20\r\n        button_w = 200\r\n        button_h = 60\r\n\r\n        for index, file in enumerate(files):\r\n            module_name = file[:-3]  # without >> .py <<\r\n            game_module = importlib.import_module(f\"library.{module_name}\")\r\n\r\n            row = index // cols\r\n            col = index % cols\r\n\r\n            x = spacing + col * (button_w + spacing)\r\n            y = spacing + row * (button_h + spacing)\r\n\r\n            rect = pygame.Rect(x, y, button_w, button_h)\r\n            button = ButtonGame(module_name, rect, game_module)\r\n            buttons.append(button)\r\n\r\n        return buttons\r\n\r\n    async def start_game(self):\r\n        some_numb = 26\r\n        add = 1\r\n        itteration = 0\r\n\r\n        while self.running:\r\n            mouse_pos = pygame.mouse.get_pos()\r\n\r\n            for event in pygame.event.get():\r\n                if event.type == pygame.QUIT:\r\n                    self.running = False\r\n\r\n                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:\r\n                    for button in self.buttons:\r\n                        if button.is_clicked(mouse_pos):\r\n                            self.run_game(button.game_module)\r\n\r\n\r\n\r\n            # fill the screen with a color to wipe away anything from last frame\r\n            self.screen.fill((some_numb, some_numb, some_numb//2))\r\n\r\n            for button in self.buttons:\r\n                button.draw(self.screen)\r\n\r\n                if button.original_rect.collidepoint(mouse_pos):\r\n                    if not button.hovered:\r\n                        button.hovered = True\r\n                        button.is_hovering()\r\n\r\n                else:\r\n                    if button.hovered:\r\n                        button.hovered = False\r\n                        button.is_hovering()\r\n\r\n\r\n            itteration, some_numb, add = self.itter_gradient(itteration, some_numb, add)\r\n\r\n            pygame.display.flip()\r\n            self.clock.tick(self.tick_rate)\r\n\r\n            await asyncio.sleep(0)\r\n\r\n    def itter_gradient(self, itteration, some_numb, add):\r\n        if itteration == 1:\r\n            if some_numb == 125 or some_numb == 25:\r\n                add = -add\r\n                some_numb += add\r\n\r\n            else:\r\n                some_numb += add\r\n            itteration = 0\r\n\r\n        else:\r\n            itteration += 1\r\n\r\n        return itteration, some_numb, add\r\n\r\n\r\n    def run_game(self, module):\r\n        if hasattr(module, \"run\"):\r\n            module.run(self.x, self.y)  # Предполагаем, что в игре есть функция run()\r\n\r\n\r\nclass ButtonGame:\r\n    def __init__(self, name, rect, game_module):\r\n        self.name = name\r\n        self.original_rect = rect\r\n        self.rect = rect.copy()\r\n        self.game_module = game_module  # Импортированный модуль\r\n        self.font = pygame.font.SysFont(None, 30)\r\n\r\n        self.hovered = False\r\n        self.scale = 1.1\r\n        self.offset_x = random.randint(-2,2)\r\n        self.offset_y = random.randint(-2, 2)\r\n\r\n\r\n    def draw(self, screen):\r\n        pygame.draw.rect(screen, (255, 255, 255), self.rect)\r\n        text = self.font.render(self.name, True, (0, 0, 0))\r\n        text_rect = text.get_rect(center=self.rect.center)\r\n        screen.blit(text, text_rect)\r\n\r\n    def is_hovering(self):\r\n        if self.hovered:\r\n            new_width = int(self.original_rect.width * self.scale)\r\n            new_height = int(self.original_rect.height * self.scale)\r\n\r\n            self.rect = pygame.Rect(\r\n                self.original_rect.centerx - new_width // 2 + self.offset_x,\r\n                self.original_rect.centery - new_height // 2 + self.offset_y,\r\n                new_width,\r\n                new_height\r\n            )\r\n\r\n        else:\r\n            self.rect = self.original_rect.copy()\r\n\r\n\r\n\r\n    def is_clicked(self, pos):\r\n        return self.rect.collidepoint(pos)\r\n\r\n\r\n\r\nasync def main():\r\n    game = GameWindow(x_pixels, y_pixels, tick_rate)\r\n    await game.start_game()\r\n\r\nasyncio.run(main())
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/bin/main.py b/bin/main.py
+--- a/bin/main.py	(revision 019c897e53e5b6b7fd0cb21182187305507d6dce)
++++ b/bin/main.py	(date 1748236116708)
+@@ -1,3 +1,4 @@
++# imports
+ import pygame
+ import asyncio
+ import importlib
+Index: bin/config.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># FPS (tick_rate)\r\ntick_rate = 60\r\n\r\n# Resolution\r\nx_pixels = 1280\r\ny_pixels = 720
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/bin/config.py b/bin/config.py
+--- a/bin/config.py	(revision 019c897e53e5b6b7fd0cb21182187305507d6dce)
++++ b/bin/config.py	(date 1748236116703)
+@@ -3,4 +3,6 @@
+ 
+ # Resolution
+ x_pixels = 1280
+-y_pixels = 720
+\ No newline at end of file
++y_pixels = 720
++
++# other data
+\ No newline at end of file
