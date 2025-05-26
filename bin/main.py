@@ -16,7 +16,7 @@ class GameWindow:
         pygame.init()
 
         self.screen = pygame.display.set_mode((self.x, self.y))
-        pygame.display.set_caption("Game Launcher")
+        pygame.display.set_caption("Mini Game Launcher")
         self.clock = pygame.time.Clock()
         self.running = True
 
@@ -33,9 +33,19 @@ class GameWindow:
         buttons = []
 
         cols = 3  # count columns in the grid
-        spacing = 20
+        spacing = 50
         button_w = 200
         button_h = 60
+
+        rows = (len(files) + cols - 1) // cols  # округляем вверх
+
+        # >>> calculate total grid size <<<
+        grid_width = cols * button_w + (cols - 1) * spacing
+        grid_height = rows * button_h + (rows - 1) * spacing
+
+        # >>> calculate offsets to center the grid <<<
+        offset_x = (self.x - grid_width) // 2
+        offset_y = (self.y - grid_height) // 2
 
         for index, file in enumerate(files):
             module_name = file[:-3]  # without >> .py <<
@@ -44,8 +54,8 @@ class GameWindow:
             row = index // cols
             col = index % cols
 
-            x = spacing + col * (button_w + spacing)
-            y = spacing + row * (button_h + spacing)
+            x = offset_x + col * (button_w + spacing)
+            y = offset_y + row * (button_h + spacing)
 
             rect = pygame.Rect(x, y, button_w, button_h)
             button = ButtonGame(module_name, rect, game_module)
@@ -116,9 +126,6 @@ class GameWindow:
     def run_game(self, module):
         if hasattr(module, "run"):
             module.run(self.x, self.y)  # Предполагаем, что в игре есть функция run()
-
-
-
 
 
 

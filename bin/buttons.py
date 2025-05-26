@@ -9,13 +9,14 @@ class ButtonGame:
         self.font = pygame.font.SysFont(None, 30)
 
         self.hovered = False
-        self.scale = 1.15
+        self.scale = 1.1
         self.offset_x = 0
         self.offset_y = 0
 
         self.growth_speed = 2  # скорость увеличения
         self.angle = 0
         self.angle_add = 1
+        self.angle_itter = 0
         self.current_width = rect.width
         self.current_height = rect.height
 
@@ -31,10 +32,19 @@ class ButtonGame:
 
 
     def draw(self, screen):
-        # Повернутая версия кнопки
-        rotated_surface = pygame.transform.rotate(self.base_surface, self.angle)
+        # Масштабируем базовую поверхность до текущих размеров
+        scaled_surface = pygame.transform.smoothscale(
+            self.base_surface,
+            (self.current_width, self.current_height)
+        )
+
+        # Поворачиваем масштабированную поверхность
+        rotated_surface = pygame.transform.rotate(scaled_surface, self.angle)
+
+        # Центрируем её на месте исходной кнопки
         rotated_rect = rotated_surface.get_rect(center=self.original_rect.center)
 
+        # Рисуем
         screen.blit(rotated_surface, rotated_rect.topleft)
 
 
@@ -56,25 +66,31 @@ class ButtonGame:
         elif self.current_height > target_height:
             self.current_height -= self.growth_speed
 
-        # Ограничим размеры
-        self.current_width = max(self.original_rect.width, min(target_width, self.current_width))
-        self.current_height = max(self.original_rect.height, min(target_height, self.current_height))
+        # Ограничим размеры, чтобы не было скачков
+        self.current_width = max(min(self.current_width, target_width), min(self.original_rect.width, target_width))
+        self.current_height = max(min(self.current_height, target_height), min(self.original_rect.height, target_height))
 
         # Позиция с поворотом
-        if self.hovered:
-            if self.angle == 10 or self.angle == -10:
-                self.angle_add = -self.angle_add
-            self.angle = (self.angle + self.angle_add)  # вращение
+        if self.angle_itter == 1:
+            if self.hovered:
+                if self.angle == 10 or self.angle == -10:
+                    self.angle_add = -self.angle_add
+                self.angle = (self.angle + self.angle_add)  # вращение
+
+            else:
+                if self.angle != 0:
+                    if self.angle >= 0:
+                        self.angle_add = -1
+                        self.angle = (self.angle + self.angle_add)
+
+                    elif self.angle <= 0:
+                        self.angle_add = 1
+                        self.angle = (self.angle + self.angle_add)
+
+            self.angle_itter = 0
 
         else:
-            if self.angle != 0:
-                if self.angle >= 0:
-                    self.angle_add = -1
-                    self.angle = (self.angle + self.angle_add)
-
-                elif self.angle <= 0:
-                    self.angle_add = 1
-                    self.angle = (self.angle + self.angle_add)
+            self.angle_itter += 1
 
 
         self.rect = pygame.Rect(
