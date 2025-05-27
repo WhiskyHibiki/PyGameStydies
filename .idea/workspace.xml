@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16f3482e-21d6-422e-9ac0-9cd041035bb0" name="Changes" comment="Separeted Main and Buttons">
+    <list default="true" id="16f3482e-21d6-422e-9ac0-9cd041035bb0" name="Changes" comment="Delete Templates">
+      <change afterPath="$PROJECT_DIR$/library/Arkanoid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/Lines.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/Lines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/Snake.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/Snake.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,18 +40,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "WhiskyHibiki"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;WhiskyHibiki&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/WhiskyHibiki/PyGameStydies.git",
-    "accountId": "e42cb301-153f-4b02-b883-ff85d386d5e2"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WhiskyHibiki/PyGameStydies.git&quot;,
+    &quot;accountId&quot;: &quot;e42cb301-153f-4b02-b883-ff85d386d5e2&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -60,17 +61,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Turtle.executor": "Run",
-    "Python.buttons.executor": "Run",
-    "Python.example.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "game__maker",
-    "last_opened_file_path": "D:/projects/FreeGamesPython/library"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Arkanoid.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Snake.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Turtle.executor&quot;: &quot;Run&quot;,
+    &quot;Python.buttons.executor&quot;: &quot;Run&quot;,
+    &quot;Python.example.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;game__maker&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/projects/FreeGamesPython/library&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\projects\FreeGamesPython\library" />
@@ -140,7 +143,31 @@
       <option name="project" value="LOCAL" />
       <updated>1748241176766</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Lines and Sneak games">
+      <option name="closed" value="true" />
+      <created>1748247507408</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1748247507408</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add Lines and Sneak games">
+      <option name="closed" value="true" />
+      <created>1748247520079</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748247520079</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Delete Templates">
+      <option name="closed" value="true" />
+      <created>1748247575755</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1748247575755</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,7 +185,9 @@
     <MESSAGE value="Making a new learning project where I will make some free games and make them in one library (mean will run from one main file like the menu)" />
     <MESSAGE value="Maked a rotating mechanic, need make scale mechanic" />
     <MESSAGE value="Separeted Main and Buttons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Separeted Main and Buttons" />
+    <MESSAGE value="Add Lines and Sneak games" />
+    <MESSAGE value="Delete Templates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete Templates" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
 </project>

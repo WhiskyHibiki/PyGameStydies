@@ -1,15 +1,15 @@
 import pygame
 
 def run(old_x, old_y):
-    turtle_game = TurtleGame(old_x, old_y)
-    turtle_game.start_game()
+    lines_game = LinesGame(old_x, old_y)
+    lines_game.start_game()
 
-class TurtleGame:
+class LinesGame:
     def __init__(self, old_x, old_y):
         pygame.init()
         self.old_screen = (old_x, old_y)
-        self.screen = pygame.display.set_mode((400, 300))
-        pygame.display.set_caption("Turtle Game")
+        self.screen = pygame.display.set_mode((old_x, old_y))
+        pygame.display.set_caption("Lines Game")
 
         self.fill = (255, 255, 255)
         self.running = True
@@ -22,6 +22,7 @@ class TurtleGame:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.screen = pygame.display.set_mode(self.old_screen)
+                    pygame.display.set_caption("Mini Games Launcher")
                     self.running = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:

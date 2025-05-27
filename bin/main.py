@@ -1,7 +1,6 @@
 import pygame
 import asyncio
 import importlib
-import random
 import os
 
 from bin.config import x_pixels, y_pixels, tick_rate
@@ -66,7 +65,7 @@ class GameWindow:
     async def start_game(self):
         some_numb = 26
         add = 1
-        itteration = 0
+        iteration = 0
 
         while self.running:
             mouse_pos = pygame.mouse.get_pos()
@@ -92,35 +91,34 @@ class GameWindow:
                 if button.original_rect.collidepoint(mouse_pos):
                     if not button.hovered:
                         button.hovered = True
-                        await button.is_hovering()
 
                 else:
                     if button.hovered:
                         button.hovered = False
-                        await button.is_hovering()
 
 
-            itteration, some_numb, add = self.itter_gradient(itteration, some_numb, add)
+            iteration, some_numb, add = self.iter_gradient(iteration, some_numb, add)
 
             pygame.display.flip()
             self.clock.tick(self.tick_rate)
 
             await asyncio.sleep(0)
 
-    def itter_gradient(self, itteration, some_numb, add):
-        if itteration == 1:
+    @staticmethod
+    def iter_gradient(iteration, some_numb, add):
+        if iteration == 1:
             if some_numb == 125 or some_numb == 25:
                 add = -add
                 some_numb += add
 
             else:
                 some_numb += add
-            itteration = 0
+            iteration = 0
 
         else:
-            itteration += 1
+            iteration += 1
 
-        return itteration, some_numb, add
+        return iteration, some_numb, add
 
 
     def run_game(self, module):

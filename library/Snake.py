@@ -62,6 +62,8 @@ class SnakeGame:
     def handle_input(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self.screen = pygame.display.set_mode((self.screen_w, self.screen_h))
+                pygame.display.set_caption("Mini Games Launcher")
                 self.running = False
 
             elif event.type == pygame.KEYDOWN:
