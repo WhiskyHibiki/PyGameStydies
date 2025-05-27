@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class ArkanoidBlock:
     WIDTH = 100
     HEIGHT = 25

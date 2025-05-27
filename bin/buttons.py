@@ -1,5 +1,6 @@
 import pygame
 
+
 class ButtonGame:
     def __init__(self, name, rect: pygame.Rect, game_module):
         self.name = name

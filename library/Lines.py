@@ -1,5 +1,6 @@
 import pygame
 
+
 def run(old_x, old_y):
     lines_game = LinesGame(old_x, old_y)
     lines_game.start_game()

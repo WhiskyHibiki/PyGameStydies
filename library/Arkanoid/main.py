@@ -3,6 +3,7 @@ import pygame
 from library.Arkanoid.arkanoid import ArkanoidBall, ArkanoidArka
 from library.Arkanoid.block_and_generator import BlockGenerator
 
+
 def run(old_x, old_y):
     arkanoid_game = ArkanoidGame(old_x, old_y)
     arkanoid_game.start_game()

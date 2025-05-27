@@ -4,6 +4,7 @@ import importlib
 import importlib.util
 import os
 
+
 from bin.config import x_pixels, y_pixels, tick_rate
 from bin.buttons import ButtonGame
 
