@@ -1,0 +1,40 @@
+# Игнорируем PyCharm/JetBrains IDE
+.idea/
+
+# Кеш-компиляции Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Логи
+*.log
+
+# Среды окружения
+env/
+venv/
+ENV/
+.venv/
+.ENV/
+
+# Конфигурационные файлы операционной системы
+.DS_Store
+Thumbs.db
+
+# Игнорируем временные файлы редакторов
+*.swp
+*.swo
+*.swn
+
+# Игнорируем файлы Pygame при записи (если ты что-то сохраняешь)
+*.bmp
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.tiff
+*.mp3
+*.ogg
+*.wav
+
+# Игнорируем shelved changes (если git всё ещё может их сохранять)
+.idea/shelf/
