@@ -2,7 +2,6 @@ import pygame
 import random
 import math
 
-
 class ArkanoidBall:
     def __init__(self, screen_w, screen_h, angle_degrees: float = random.randint(0, 360)):
         self.ball_circle_radius = 15

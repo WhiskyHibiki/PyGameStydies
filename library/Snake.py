@@ -1,7 +1,6 @@
 import pygame
 from random import randrange
 
-
 def run(old_x, old_y):
     snake_game = SnakeGame(old_x, old_y)
     snake_game.start_game()
