@@ -1,6 +1,7 @@
 import pygame
 import asyncio
 import importlib
+import importlib.util
 import os
 
 from bin.config import x_pixels, y_pixels, tick_rate
@@ -23,32 +24,47 @@ class GameWindow:
         self.buttons = self.load_games()
 
     def load_games(self):
-        # loading all games from library
+
         current_dir = os.path.dirname(__file__)
         project_dir = os.path.abspath(os.path.join(current_dir, ".."))
         library_dir = os.path.join(project_dir, "library")
 
-        files = [f for f in os.listdir(library_dir) if f.endswith(".py")]
         buttons = []
-
-        cols = 3  # count columns in the grid
+        cols = 3
         spacing = 50
         button_w = 200
         button_h = 60
 
-        rows = (len(files) + cols - 1) // cols  # округляем вверх
+        entries = os.listdir(library_dir)
+        valid_games = []
 
-        # >>> calculate total grid size <<<
+        for entry in entries:
+            full_path = os.path.join(library_dir, entry)
+
+            # 1. Если обычный .py-файл
+            if entry.endswith(".py") and os.path.isfile(full_path):
+                module_name = f"library.{entry[:-3]}"
+                valid_games.append((entry[:-3], module_name))
+
+            # 2. Если папка с main.py внутри
+            elif os.path.isdir(full_path):
+                main_file = os.path.join(full_path, "main.py")
+                if os.path.isfile(main_file):
+                    module_name = f"library.{entry}.main"
+                    valid_games.append((entry, module_name))
+
+        rows = (len(valid_games) + cols - 1) // cols
         grid_width = cols * button_w + (cols - 1) * spacing
         grid_height = rows * button_h + (rows - 1) * spacing
-
-        # >>> calculate offsets to center the grid <<<
         offset_x = (self.x - grid_width) // 2
         offset_y = (self.y - grid_height) // 2
 
-        for index, file in enumerate(files):
-            module_name = file[:-3]  # without >> .py <<
-            game_module = importlib.import_module(f"library.{module_name}")
+        for index, (display_name, module_name) in enumerate(valid_games):
+            try:
+                game_module = importlib.import_module(module_name)
+            except Exception as e:
+                print(f"❌ Failed to import {module_name}: {e}")
+                continue
 
             row = index // cols
             col = index % cols
@@ -57,7 +73,7 @@ class GameWindow:
             y = offset_y + row * (button_h + spacing)
 
             rect = pygame.Rect(x, y, button_w, button_h)
-            button = ButtonGame(module_name, rect, game_module)
+            button = ButtonGame(display_name, rect, game_module)
             buttons.append(button)
 
         return buttons
